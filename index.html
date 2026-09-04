@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Walky Labs — The digital lab for the agentic era</title>
+<meta name="description" content="Walky Labs designs and ships solutions in agentic AI, MCP gateways, model gateways, API management and web3 — from prototype to production.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23171E38'/%3E%3Cpath d='M14 40 L24 22 L32 36 L40 22 L50 40' stroke='%235646E5' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F5EF;
+    --sand:#EDE7DB;
+    --ink:#171E38;
+    --ink-soft:#3D4460;
+    --violet:#5646E5;
+    --violet-deep:#4234C8;
+    --lilac:#E6E1FB;
+    --line:rgba(23,30,56,.14);
+    --radius:18px;
+    --max:1160px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Instrument Sans",system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lilac);color:var(--ink)}
+  img{max-width:100%}
+  a{color:inherit}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--violet);
+    font-weight:500;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+  /* ---------- top ribbon ---------- */
+  .ribbon{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    text-align:center;
+    padding:9px 16px;
+  }
+  .ribbon a{color:#B9AFFF;text-decoration:none}
+  .ribbon a:hover{text-decoration:underline}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;max-width:var(--max);margin:0 auto;
+  }
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:19px;letter-spacing:-.01em}
+  .logo svg{display:block}
+  .nav-links{display:flex;gap:30px;align-items:center;list-style:none}
+  .nav-links a{
+    text-decoration:none;font-size:15px;font-weight:500;color:var(--ink-soft);
+    transition:color .15s;
+  }
+  .nav-links a:hover{color:var(--ink)}
+  .btn{
+    display:inline-block;
+    background:var(--ink);color:var(--paper);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    padding:13px 26px;border-radius:999px;text-decoration:none;
+    border:1px solid var(--ink);
+    transition:background .2s,color .2s,transform .2s;
+  }
+  .btn:hover{background:var(--violet);border-color:var(--violet);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper)}
+  .btn.on-dark{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .btn.on-dark:hover{background:var(--violet);color:#fff;border-color:var(--violet)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;padding:96px 0 80px;text-align:center}
+  .hero .eyebrow{display:block;margin-bottom:22px}
+  h1{
+    font-family:"Fraunces",serif;
+    font-weight:500;
+    font-size:clamp(42px,7vw,84px);
+    line-height:1.04;
+    letter-spacing:-.015em;
+    max-width:15ch;margin:0 auto;
+  }
+  h1 em{
+    font-style:italic;font-weight:500;color:var(--violet);
+  }
+  .hero p{
+    max-width:600px;margin:28px auto 0;color:var(--ink-soft);font-size:19px;
+  }
+  .hero-cta{margin-top:40px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .hero-fields{
+    margin-top:64px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  }
+  .chip{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;
+    background:var(--lilac);color:var(--violet-deep);
+    border:1px solid color-mix(in srgb,var(--violet) 25%,transparent);
+    padding:7px 15px;border-radius:999px;white-space:nowrap;
+  }
+
+  /* the walk trail */
+  .trail{
+    position:absolute;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:0;
+  }
+  .trail path{
+    fill:none;stroke:var(--violet);stroke-width:2.5;
+    stroke-dasharray:1 14;stroke-linecap:round;
+    opacity:.5;
+  }
+  .hero > .wrap{position:relative;z-index:1}
+
+  /* load-in */
+  .rise{opacity:0;transform:translateY(18px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  .rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.18s}.rise.d3{animation-delay:.3s}.rise.d4{animation-delay:.45s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* ---------- marquee ---------- */
+  .marquee{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--sand);
+    overflow:hidden;padding:26px 0;
+  }
+  .marquee-track{display:flex;gap:72px;width:max-content;animation:slide 36s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  .stat{display:flex;align-items:baseline;gap:14px;white-space:nowrap}
+  .stat b{font-family:"Fraunces",serif;font-size:34px;font-weight:600;letter-spacing:-.02em}
+  .stat span{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+
+  /* ---------- sections ---------- */
+  section{padding:104px 0}
+  .sec-head{max-width:640px;margin-bottom:56px}
+  .sec-head .eyebrow{display:block;margin-bottom:16px}
+  h2{
+    font-family:"Fraunces",serif;font-weight:500;
+    font-size:clamp(30px,4.4vw,50px);line-height:1.12;letter-spacing:-.01em;
+  }
+  h2 em{font-style:italic;color:var(--violet)}
+  .sec-head p{margin-top:18px;color:var(--ink-soft)}
+
+  /* solutions grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:30px 28px 32px;
+    display:flex;flex-direction:column;gap:14px;
+    transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,border-color .25s;
+  }
+  .card:hover{
+    transform:translateY(-5px);
+    border-color:color-mix(in srgb,var(--violet) 40%,transparent);
+    box-shadow:0 18px 40px -20px rgba(23,30,56,.25);
+  }
+  .card .tag{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--violet);
+  }
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:23px;letter-spacing:-.01em}
+  .card p{font-size:15.5px;color:var(--ink-soft)}
+  .card .glyph{
+    width:44px;height:44px;border-radius:12px;
+    background:var(--lilac);display:grid;place-items:center;margin-bottom:4px;
+  }
+  .card .glyph svg{width:22px;height:22px;stroke:var(--violet-deep)}
+
+  /* ---------- process ---------- */
+  .process{background:var(--sand);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+  .step{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    padding:34px 28px;position:relative;
+  }
+  .step::before{
+    counter-increment:step;
+    content:"0" counter(step);
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.2em;
+    color:var(--violet);display:block;margin-bottom:18px;
+  }
+  .step h3{font-family:"Fraunces",serif;font-size:24px;font-weight:600;margin-bottom:10px}
+  .step p{font-size:15.5px;color:var(--ink-soft)}
+
+  /* ---------- manifesto ---------- */
+  .manifesto{
+    background:var(--ink);color:var(--paper);
+    text-align:center;padding:130px 0;position:relative;overflow:hidden;
+  }
+  .manifesto .eyebrow{color:#B9AFFF;display:block;margin-bottom:24px}
+  .manifesto blockquote{
+    font-family:"Fraunces",serif;font-weight:400;
+    font-size:clamp(26px,3.6vw,44px);line-height:1.25;letter-spacing:-.01em;
+    max-width:21ch;margin:0 auto;
+  }
+  .manifesto em{font-style:italic;color:#B9AFFF}
+  .manifesto .sig{
+    margin-top:34px;font-family:"IBM Plex Mono",monospace;font-size:12px;
+    letter-spacing:.2em;text-transform:uppercase;color:rgba(247,245,239,.55);
+  }
+
+  /* ---------- contact ---------- */
+  .contact{text-align:center}
+  .contact h2{max-width:16ch;margin:0 auto}
+  .contact p{max-width:520px;margin:20px auto 0;color:var(--ink-soft)}
+  .contact .hero-cta{margin-top:36px}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 0 44px;
+  }
+  .foot{
+    display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+    max-width:var(--max);margin:0 auto;padding:0 28px;
+  }
+  .foot small{
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;
+    color:var(--ink-soft);text-transform:uppercase;
+  }
+  .foot nav{display:flex;gap:24px}
+  .foot nav a{font-size:14px;color:var(--ink-soft);text-decoration:none}
+  .foot nav a:hover{color:var(--ink)}
+
+  /* scroll reveal */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  :focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:6px}
+
+  @media (prefers-reduced-motion:reduce){
+    .rise,.reveal{opacity:1;transform:none;animation:none;transition:none}
+    .marquee-track{animation:none}
+    html{scroll-behavior:auto}
+  }
+  @media (max-width:900px){
+    .grid,.steps{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:640px){
+    .nav-links li:not(.cta-li){display:none}
+    .grid,.steps{grid-template-columns:1fr}
+    section{padding:72px 0}
+    .hero{padding:64px 0 56px}
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">Walky Labs is open for new collaborations — <a href="#contact">start a conversation →</a></div>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="#" aria-label="Walky Labs home">
+      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="#171E38"/>
+        <path d="M14 40 L24 22 L32 36 L40 22 L50 40" stroke="#5646E5" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Walky Labs
+    </a>
+    <ul class="nav-links">
+      <li><a href="#solutions">Solutions</a></li>
+      <li><a href="#process">How we work</a></li>
+      <li><a href="#manifesto">Manifesto</a></li>
+      <li class="cta-li"><a class="btn" href="#contact">Work with us</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="Introduction">
+    <svg class="trail" viewBox="0 0 1440 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path id="trailPath" d="M -40 120 C 200 60, 340 220, 560 190 S 900 40, 1080 160 S 1300 480, 1500 420"/>
+      <path d="M -60 560 C 240 500, 420 620, 720 570 S 1160 480, 1500 590"/>
+    </svg>
+    <div class="wrap">
+      <span class="eyebrow rise">A digital lab, built for what's next</span>
+      <h1 class="rise d1">We build the roads <em>agents</em> walk on.</h1>
+      <p class="rise d2">Walky Labs designs and ships the connective infrastructure of the agentic era — gateways, protocols and platforms that let AI, APIs and web3 systems work together in production, not just in demos.</p>
+      <div class="hero-cta rise d3">
+        <a class="btn" href="#solutions">Explore our solutions</a>
+        <a class="btn ghost" href="#process">See how the lab works</a>
+      </div>
+      <div class="hero-fields rise d4" aria-label="Focus areas">
+        <span class="chip">agentic systems</span>
+        <span class="chip">mcp gateway</span>
+        <span class="chip">model gateway</span>
+        <span class="chip">api management</span>
+        <span class="chip">web3</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="stat"><b>5+</b><span>Solution domains</span></div>
+      <div class="stat"><b>1</b><span>Protocol-first mindset</span></div>
+      <div class="stat"><b>Weeks</b><span>From idea to prototype</span></div>
+      <div class="stat"><b>Prod</b><span>Where every build ends up</span></div>
+      <div class="stat"><b>0</b><span>Vendor lock-in by design</span></div>
+      <div class="stat"><b>5+</b><span>Solution domains</span></div>
+      <div class="stat"><b>1</b><span>Protocol-first mindset</span></div>
+      <div class="stat"><b>Weeks</b><span>From idea to prototype</span></div>
+      <div class="stat"><b>Prod</b><span>Where every build ends up</span></div>
+      <div class="stat"><b>0</b><span>Vendor lock-in by design</span></div>
+    </div>
+  </div>
+
+  <section id="solutions">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">What we build</span>
+        <h2>Infrastructure for systems that <em>think</em> and <em>transact</em>.</h2>
+        <p>Every solution starts from the same conviction: the hard part of AI isn't the model — it's everything the model has to talk to.</p>
+      </div>
+      <div class="grid">
+        <article class="card reveal">
+          <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l2.8 2.8m8.4 8.4L19 19M19 5l-2.8 2.8M7.8 16.2 5 19"/></svg></div>
+          <span class="tag">Agentic</span>
+          <h3>Agentic systems</h3>
+          <p>Autonomous agents that plan, call tools and complete real work — designed with guardrails, evals and human handoff from day one.</p>
+        </article>
+        <article class="card reveal">
+          <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="6" rx="3"/><path d="M7 9V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3M7 15v3a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-3"/></svg></div>
+          <span class="tag">MCP</span>
+          <h3>MCP Gateway</h3>
+          <p>One governed entry point for the Model Context Protocol: authentication, routing, observability and policy for every tool your agents can reach.</p>
+        </article>
+        <article class="card reveal">
+          <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="7" cy="18" r="2"/></svg></div>
+          <span class="tag">LLM Ops</span>
+          <h3>Model Gateway</h3>
+          <p>Route traffic across model providers with fallbacks, caching, cost controls and audit trails — swap models without rewriting your stack.</p>
+        </article>
+        <article class="card reveal">
+          <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg></div>
+          <span class="tag">APIM</span>
+          <h3>API Management</h3>
+          <p>Full-lifecycle API platforms — design, gateway policies, developer portals and monetization — built on the APIM stack you already run.</p>
+        </article>
+        <article class="card reveal">
+          <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M12 12 3 7m9 5 9-5m-9 5v10"/></svg></div>
+          <span class="tag">Web3</span>
+          <h3>Web3 solutions</h3>
+          <p>Smart contracts, tokenized workflows and on-chain integrations that connect decentralized rails to the systems your business runs on.</p>
+        </article>
+        <article class="card reveal">
+          <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6L4 19a2 2 0 0 0 1.8 3h12.4A2 2 0 0 0 20 19L14 8V2"/><path d="M8.5 2h7"/></svg></div>
+          <span class="tag">R&amp;D</span>
+          <h3>Lab experiments</h3>
+          <p>The "and more": early bets on emerging protocols and patterns. Some become products, all of them sharpen what we ship for clients.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How the lab works</span>
+        <h2>From first sketch to production, <em>walking pace</em> — steady and fast.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <h3>Scout</h3>
+          <p>We map your systems, constraints and the shortest path to value. A week of questions saves a quarter of rework.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Prototype</h3>
+          <p>A working build in weeks, on your real data and real APIs — because a demo that can't touch production is just a slide.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Ship</h3>
+          <p>Hardened, observable, documented and handed over. We stay until your team runs it without us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="manifesto" id="manifesto">
+    <div class="wrap">
+      <span class="eyebrow reveal">Why "Walky"</span>
+      <blockquote class="reveal">Big platforms sprint and stumble. A lab <em>walks</em> — every step tested, every step forward.</blockquote>
+      <div class="sig reveal">— The Walky Labs manifesto</div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <span class="eyebrow reveal" style="display:block;margin-bottom:18px">Start a conversation</span>
+      <h2 class="reveal">Have a system that needs to <em>talk</em> to the future?</h2>
+      <p class="reveal">Tell us what you're building — or what's refusing to work. We'll come back with an honest read and a first step.</p>
+      <div class="hero-cta reveal">
+        <a class="btn" href="mailto:hello@walkylabs.com">hello@walkylabs.com</a>
+        <a class="btn ghost" href="https://github.com/api-walker-hub" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <small>© 2026 Walky Labs — built in the open</small>
+    <nav aria-label="Footer">
+      <a href="#solutions">Solutions</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  // Trail draw on load (respects reduced motion)
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.trail path').forEach((p,i)=>{
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = `1 14`;
+      p.style.opacity = 0;
+      p.animate([{opacity:0},{opacity:.5}],{duration:1800,delay:400+i*500,fill:'forwards',easing:'ease-out'});
+    });
+  }
+</script>
+</body>
+</html>

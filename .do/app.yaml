@@ -1,0 +1,13 @@
+name: walky-labs
+region: nyc
+features:
+  - buildpack-stack=ubuntu-22
+static_sites:
+  - name: site
+    git:
+      repo_clone_url: https://github.com/api-walker-hub/walky-labs.git
+      branch: main
+    source_dir: /
+    output_dir: /
+    index_document: index.html
+    error_document: index.html
