@@ -434,12 +434,25 @@
 
 <script>
   // Scroll reveal
+  const revealEls = [...document.querySelectorAll('.reveal')];
   const obs = new IntersectionObserver((entries)=>{
     for(const e of entries){
       if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
     }
-  },{threshold:.15});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  },{threshold:.1,rootMargin:'80px 0px 0px 0px'});
+  revealEls.forEach(el=>obs.observe(el));
+  // Catch-up: after fast scrolls or anchor jumps, reveal anything at or above the viewport
+  let ticking = false;
+  function catchUp(){
+    ticking = false;
+    for(const el of revealEls){
+      if(!el.classList.contains('in') && el.getBoundingClientRect().top < innerHeight){
+        el.classList.add('in');obs.unobserve(el);
+      }
+    }
+  }
+  addEventListener('scroll',()=>{ if(!ticking){ticking=true;requestAnimationFrame(catchUp);} },{passive:true});
+  catchUp();
 
   // Trail draw on load (respects reduced motion)
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
