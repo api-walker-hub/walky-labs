@@ -17,8 +17,14 @@ npx serve .
 
 ## Deploy
 
-The site auto-deploys from the `main` branch via DigitalOcean App Platform (`deploy_on_push`). To create the app the first time:
+The site is hosted on DigitalOcean App Platform as a static site pulled from this public repo. To create the app the first time:
 
 ```bash
 doctl apps create --spec .do/app.yaml
+```
+
+Public-git sources do not auto-deploy on push — after pushing to `main`, trigger a deployment:
+
+```bash
+doctl apps create-deployment <app-id>
 ```
